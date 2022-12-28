@@ -384,12 +384,18 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
 
-    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause", false) end),
-    awful.key({ }, "XF86AudioNext", function () awful.util.spawn("mpc next", false) end),
-    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("mpc prev", false) end),
-    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -c 0 set Master 1dB+", false) end),
-    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -c 0 set Master 1dB-", false) end),
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -c 0 set Master toggle", false) end)
+    awful.key({ }, "XF86AudioPlay", function () awful.util.spawn("dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause", false) end,
+              {description = "media play/pause", group = "media"}),
+    awful.key({ }, "XF86AudioNext", function () awful.util.spawn("mpc next", false) end,
+              {description = "media next", group = "media"}),
+    awful.key({ }, "XF86AudioPrev", function () awful.util.spawn("mpc prev", false) end,
+              {description = "media prev", group = "media"}),
+    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -c 0 set Master 1dB+", false) end,
+              {description = "media volume +", group = "media"}),
+    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -c 0 set Master 1dB-", false) end,
+              {description = "media volume -", group = "media"}),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -c 0 set Master toggle", false) end,
+              {description = "media mute", group = "media"})
 )
 
 clientkeys = gears.table.join(
