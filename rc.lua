@@ -21,6 +21,7 @@ require("awful.hotkeys_popup.keys")
 -- Load Debian menu entries
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
+local lain = require("lain")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -81,6 +82,9 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
+    -- lain.layout.termfair.center,
+    -- lain.layout.cascade,
+    lain.layout.centerwork,
 }
 -- }}}
 
@@ -187,8 +191,14 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4"}, s, awful.layout.layouts[1])
 
+    -- On home PC 1=upper right, 2=main, 3= upper left
+    if s.index==2 and #awful.layout.layouts > 1 then
+        -- make default layout for large screen centerwork
+        awful.tag({ "1", "2", "3", "4"}, s, awful.layout.layouts[2])
+    else
+        awful.tag({ "1", "2", "3", "4"}, s, awful.layout.layouts[1])
+    end
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -235,6 +245,12 @@ awful.screen.connect_for_each_screen(function(s)
         },
     }
 end)
+
+-- for s in screen do
+--     if s.index==1 then
+--         -- make default layout for large screen centerwork
+
+-- end
 -- }}}
 
 -- {{{ Mouse bindings
