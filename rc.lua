@@ -190,10 +190,10 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 
 -- extra widgets
-local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
-local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
-local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
-local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+-- local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+-- local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+-- local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
+-- local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -252,10 +252,10 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            volume_widget({
-                widget_type = 'arc'
-            }),
-            cpu_widget(),
+            -- volume_widget({
+            --     widget_type = 'arc'
+            -- }),
+            -- cpu_widget(),
             -- weather_widget({
             --     api_key='dd100d730909e1e82dc91f41557048b9',
             --     coordinates = {45.5017, -73.5673},
@@ -274,7 +274,7 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
-            logout_menu_widget(),
+            -- logout_menu_widget(),
 
         },
     }
