@@ -171,6 +171,8 @@ local tasklist_buttons = gears.table.join(
                                               awful.client.focus.byidx(-1)
                                           end))
 
+
+
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
@@ -185,6 +187,13 @@ end
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
+
+
+-- extra widgets
+local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -243,10 +252,30 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            volume_widget({
+                widget_type = 'arc'
+            }),
+            cpu_widget(),
+            -- weather_widget({
+            --     api_key='dd100d730909e1e82dc91f41557048b9',
+            --     coordinates = {45.5017, -73.5673},
+            -- }),
+            -- weather_curl_widget({
+            --     api_key='dd100d730909e1e82dc91f41557048b9',
+            --     coordinates = {40.7452, -74.0347},
+            --     units = 'imperial',
+            --     font_name = 'Carter One',
+            --     icons = 'VitalyGorbachev',
+            --     icons_extension = '.svg',
+            --     show_hourly_forecast = true,
+            --     show_daily_forecast = true,
+            -- }),
+            -- mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
+            logout_menu_widget(),
+
         },
     }
 end)
