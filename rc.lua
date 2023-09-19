@@ -19,7 +19,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 -- Load Debian menu entries
-local debian = require("debian.menu")
+-- local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 local lain = require("lain")
 
@@ -53,7 +53,7 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
+terminal = "alacritty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -84,7 +84,8 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.se,
     -- lain.layout.termfair.center,
     -- lain.layout.cascade,
-    lain.layout.centerwork,
+    -- lain.layout.centerwork,
+    -- lain.layout.double_centerwork,
 }
 -- }}}
 
@@ -110,7 +111,7 @@ else
     mymainmenu = awful.menu({
         items = {
                   menu_awesome,
-                  { "Debian", debian.menu.Debian_menu.Debian },
+                  -- { "Debian", debian.menu.Debian_menu.Debian },
                   menu_terminal,
                 }
     })
@@ -190,10 +191,11 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 
 -- extra widgets
--- local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
--- local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 -- local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
--- local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -252,10 +254,10 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            -- volume_widget({
-            --     widget_type = 'arc'
-            -- }),
-            -- cpu_widget(),
+            volume_widget({
+                widget_type = 'arc'
+            }),
+            cpu_widget(),
             -- weather_widget({
             --     api_key='dd100d730909e1e82dc91f41557048b9',
             --     coordinates = {45.5017, -73.5673},
@@ -274,7 +276,11 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
-            -- logout_menu_widget(),
+            battery_widget({
+                path_to_icons = '/usr/share/icons/Adwaita/symbolic/status/',
+                show_current_level = true,
+            }),
+            logout_menu_widget(),
 
         },
     }
@@ -387,8 +393,10 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
     -- other programs
-    awful.key({ modkey,           }, "b", function() awful.util.spawn("brave-browser") end,
+    awful.key({ modkey,           }, "b", function() awful.util.spawn("brave") end,
               {description = "launch brave", group = "launcher"}),
+    awful.key({ modkey,           }, "v", function() awful.util.spawn("pavucontrol") end,
+              {description = "launch pavucontrol", group = "launcher"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -689,3 +697,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Autostart Applications
 awful.spawn.with_shell("compton")
 awful.spawn.with_shell("nitrogen --restore")
+
+beautiful.useless_gap = 5
