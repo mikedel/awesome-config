@@ -689,3 +689,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Autostart Applications
 awful.spawn.with_shell("compton")
 awful.spawn.with_shell("nitrogen --restore")
+
+-- window padding
+-- beautiful.useless_gap = 2
