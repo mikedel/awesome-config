@@ -202,7 +202,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
 
     -- On home PC 1=upper right, 2=main, 3= upper left
-    if s.geometry.width > 1920 then
+    if s.geometry.width > 1920 && s.geometry.height < 2100 then
         awful.tag({ "1", "2", "3", "4"}, s, awful.layout.layouts[2])
     else
         awful.tag({ "1", "2", "3", "4"}, s, awful.layout.layouts[1])
