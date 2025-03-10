@@ -46,6 +46,7 @@ do
         in_error = false
     end)
 end
+naughty.config.defaults.icon_size = 32
 -- }}}
 
 -- {{{ Variable definitions
