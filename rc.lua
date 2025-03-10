@@ -22,6 +22,7 @@ require("awful.hotkeys_popup.keys")
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 local lain = require("lain")
+local focuswork = require("focuswork")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -86,6 +87,7 @@ awful.layout.layouts = {
     -- lain.layout.termfair.center,
     -- lain.layout.cascade,
     lain.layout.centerwork,
+    focuswork,
 }
 -- }}}
 
@@ -195,7 +197,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 -- local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 -- local weather_widget = require("awesome-wm-widgets.weather-widget.weather")
 -- local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
-
+-- local mybattery = lain.widget.bat() -- Not working
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
@@ -203,10 +205,10 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
 
     -- On home PC 1=upper right, 2=main, 3= upper left
-    if s.geometry.width > 1920 then
-        awful.tag({ "1", "2", "3", "4"}, s, awful.layout.layouts[2])
+    if s.geometry.width > 1920 and s.geometry.height < 2100 then
+        awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8"}, s, awful.layout.layouts[2])
     else
-        awful.tag({ "1", "2", "3", "4"}, s, awful.layout.layouts[1])
+        awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8"}, s, awful.layout.layouts[1])
     end
     -- if s.index==2 and #awful.layout.layouts > 1 then
     --     -- make default layout for large screen centerwork
@@ -499,7 +501,7 @@ clientkeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 4 do
+for i = 1, 8 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
@@ -690,3 +692,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Autostart Applications
 awful.spawn.with_shell("compton")
 awful.spawn.with_shell("nitrogen --restore")
+
+-- window padding
+-- beautiful.useless_gap = 2
